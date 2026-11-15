@@ -311,11 +311,11 @@ footer .wrap>div{display:grid;gap:6px;align-content:start;min-width:0}
 <div class="form-thanks" hidden="">
 <div class="form" role="status">
 <strong>Thank you.</strong>
-<span>Your email app should open with your enquiry ready to send. If it doesn't, email zarqa@inhousesa.org or call 07568 275972. We respond within 24 hours.</span>
+<span data-sent="Your enquiry has been sent. We respond within 24 hours, and the same working day for urgent placements. If it can't wait, call 07568 275972.">Your email app should open with your enquiry ready to send. If it doesn't, email zarqa@inhousesa.org or call 07568 275972. We respond within 24 hours.</span>
 </div>
 </div>
 <div class="form-wrap">
-<form class="form" data-mailto="zarqa@inhousesa.org" data-subject="Referral enquiry">
+<form class="form" data-mailto="zarqa@inhousesa.org" data-subject="Referral enquiry" data-key="be403e3f-ce49-4183-af55-d6db0f0865e8"><input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" hidden>
 <label>Your name<input autocomplete="name" name="name" required="" type="text"/></label>
 <label>Local authority<input name="authority" required="" type="text"/></label>
 <label>Work email<input autocomplete="email" name="email" required="" type="email"/></label>
@@ -349,11 +349,18 @@ footer .wrap>div{display:grid;gap:6px;align-content:start;min-width:0}
     var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.remove('pre');io.unobserve(e.target)}})},{rootMargin:'0px 0px -8% 0px'});
     document.querySelectorAll('.rv').forEach(function(el){if(el.getBoundingClientRect().top>innerHeight){el.classList.add('pre');io.observe(el)}});
   }
-  document.querySelectorAll('form[data-mailto]').forEach(function(form){form.addEventListener('submit',function(e){e.preventDefault();var lines=[];
-    form.querySelectorAll('input, select, textarea').forEach(function(el){if(!el.name||el.type==='file')return;var l=el.closest('label');lines.push((l?l.childNodes[0].textContent.trim():el.name)+': '+(el.value||'-'))});
-    var href='mailto:'+form.dataset.mailto+'?subject='+encodeURIComponent(form.dataset.subject)+'&body='+encodeURIComponent(lines.join('\n'));
+  document.querySelectorAll('form[data-mailto]').forEach(function(form){form.addEventListener('submit',function(e){e.preventDefault();var lines=[],data={};
+    form.querySelectorAll('input, select, textarea').forEach(function(el){if(!el.name||el.type==='file'||el.name==='botcheck')return;var l=el.closest('label'),k=l?l.childNodes[0].textContent.trim():el.name;lines.push(k+': '+(el.value||'-'));data[k]=el.value||'-';if(el.name==='email')data.email=el.value});
     var wrap=form.closest('.form-wrap'),thanks=wrap&&wrap.parentElement.querySelector('.form-thanks');
-    if(thanks)thanks.hidden=false;if(wrap)wrap.hidden=true;window.location.href=href})});
+    function done(sent){if(thanks){var t=thanks.querySelector('[data-sent]');if(sent&&t)t.textContent=t.dataset.sent;thanks.hidden=false}if(wrap)wrap.hidden=true}
+    function byEmail(){done(false);window.location.href='mailto:'+form.dataset.mailto+'?subject='+encodeURIComponent(form.dataset.subject)+'&body='+encodeURIComponent(lines.join('\n'))}
+    if(!form.dataset.key||!window.fetch)return byEmail();
+    var bot=form.querySelector('[name=botcheck]');if(bot&&bot.checked)return done(true);
+    data.access_key=form.dataset.key;data.subject=form.dataset.subject+' from the website';data.from_name='In House website';
+    var btn=form.querySelector('button[type=submit]'),label=btn.textContent;btn.disabled=true;btn.textContent='Sending…';
+    fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify(data)})
+      .then(function(r){return r.json()}).then(function(j){if(j&&j.success)done(true);else throw 0})
+      .catch(function(){btn.disabled=false;btn.textContent=label;byEmail()})})});
 })();
 </script>
 </body>
