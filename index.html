@@ -7,7 +7,7 @@
 <meta name="description" content="Ofsted-registered supported accommodation in Bristol for young people aged 16–17. Small shared homes, at least three hours of support every day and a 24-hour referral response.">
 <link rel="canonical" href="https://www.inhousesa.org/">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="In House Supported Accommodation">
+<meta property="og:site_name" content="In House Supported Accommodation Ltd">
 <meta property="og:title" content="Supported Accommodation in Bristol for 16–17 Year Olds | In House">
 <meta property="og:description" content="Ofsted-registered supported accommodation in Bristol for young people aged 16–17. Small shared homes, at least three hours of support every day and a 24-hour referral response.">
 <meta property="og:url" content="https://www.inhousesa.org/">
@@ -17,161 +17,330 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&amp;family=Figtree:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
 <style>
-html{scroll-behavior:smooth}
-[hidden]{display:none!important}
-img{max-width:100%}
-*:focus-visible{outline:3px solid #F5C518;outline-offset:2px}
-body{margin:0}
-a{color:#4A3AA8}a:hover{color:#2B2D5C}
-.btn{transition:transform .18s ease, box-shadow .18s ease}
-.btn:hover{transform:translate(-3px,-3px);box-shadow:4px 4px 0 #1D1F3D}
-.tile{transition:transform .2s ease}
-.tile:hover{transform:rotate(-1deg) scale(1.01)}
-@media (prefers-reduced-motion: reduce){.btn,.tile{transition:none}.btn:hover,.tile:hover{transform:none}}
+html{scroll-behavior:smooth}[hidden]{display:none!important}img{max-width:100%}
+
+/* Layout: one continuous route. A path draws itself through the six skill areas in the hero, then a rail fills as you scroll the referral steps. Light, single committed look. */
+:root{
+  color-scheme:light;
+  --bg:#ffffff; --mint:#F2F0FB; --ink:#1D1F3D; --green:#4A3AA8; --green-deep:#2B2D5C; --lime:#F5C518; --teal:#1BC5A6; --pink:#F0557B; --teal-tint:#E2F6F1; --sun-tint:#FDF3D0;
+  --muted:#3A3E5C; --line:#E2E0F7; --white:#ffffff;
+  --display:"Bricolage Grotesque","Trebuchet MS",system-ui,sans-serif;
+  --body:"Figtree",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6;margin:0}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+a{color:inherit}
+.wrap{max-width:1140px;margin-inline:auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--display);font-weight:800;line-height:1.08;margin:0;text-wrap:balance;letter-spacing:-.03em}
+h2{font-size:clamp(1.9rem,4.2vw,3rem)}
+p{margin:0}
+.eyebrow{font-size:.78rem;letter-spacing:.13em;text-transform:uppercase;color:var(--green);font-weight:600}
+
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:rgba(255,255,255,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;gap:28px;padding-block:8px}
+.logo{font-family:var(--display);font-weight:700;font-size:1.2rem;text-decoration:none;display:flex;align-items:center;gap:10px;margin-right:auto;letter-spacing:-.03em}
+.logo img{display:block;height:46px;width:auto}.logo span{display:grid;line-height:1.05;font-weight:800;font-size:1.15rem}.logo small{font-family:var(--body);font-weight:600;font-size:.66rem;letter-spacing:.09em;text-transform:uppercase;color:var(--pink)}
+.nav nav{display:flex;gap:24px;font-size:.93rem}
+.nav nav a{text-decoration:none;color:var(--muted);background:linear-gradient(var(--green),var(--green)) 0 100%/0 2px no-repeat;transition:background-size .3s,color .2s;padding-bottom:3px}
+.nav nav a:hover{color:var(--ink);background-size:100% 2px}
+.btn{display:inline-flex;align-items:center;gap:10px;background:var(--green);color:var(--white);font-weight:600;text-decoration:none;padding:13px 22px;border-radius:12px;transition:transform .2s,background .2s}
+.btn svg{transition:transform .25s}
+.btn:hover{background:var(--green-deep);transform:translateY(-2px)}.btn:hover svg{transform:translateX(4px)}
+.btn.ghost{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--ink)}
+.btn.ghost:hover{background:var(--ink);color:var(--white)}
+.btn.small{padding:9px 14px;font-size:.9rem;border-radius:10px;white-space:nowrap}
+a:focus-visible{outline:2px solid var(--green);outline-offset:3px}
+.menu{display:none;appearance:none;border:0;background:var(--mint);border-radius:10px;width:44px;height:44px;align-items:center;justify-content:center;cursor:pointer;color:var(--ink)}
+.nav nav a.only-m{display:none}
+@media(max-width:900px){.menu{display:inline-flex}.nav{gap:12px}
+.nav nav{display:none;position:absolute;left:0;right:0;top:100%;background:var(--bg);border-bottom:1px solid var(--line);flex-direction:column;gap:0;padding:6px 20px 16px;box-shadow:0 20px 30px rgba(29,31,61,.08)}
+.nav nav.open{display:flex}.nav nav a{padding:13px 0;font-size:1.05rem;color:var(--ink);border-bottom:1px solid var(--line);background:none}
+.nav nav a.only-m{display:block;font-weight:700;color:var(--green);border-bottom:0}}
+@media(max-width:520px){.nav>.btn.small{display:none}}
+
+.hero .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(20px,4vw,60px);align-items:center;padding-block:clamp(36px,6vw,72px)}
+.hero .wrap>*{min-width:0}
+.hero h1{font-size:clamp(2.6rem,6.2vw,4.9rem);margin-top:18px}
+.hero h1 span{white-space:nowrap;background:linear-gradient(transparent 62%,var(--lime) 62%);padding-inline:.08em;margin-inline:-.08em}
+.hero .lead{max-width:50ch;color:var(--muted);font-size:1.1rem;margin-top:22px}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.avail{display:inline-flex;align-items:center;gap:10px;font-size:.9rem;font-weight:500;margin-top:26px;padding:8px 14px;border-radius:999px;background:var(--teal-tint);color:var(--ink)}
+.avail b{width:9px;height:9px;border-radius:50%;background:var(--teal);animation:pulse 2s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(27,197,166,.6)}100%{box-shadow:0 0 0 12px rgba(27,197,166,0)}}
+.route{background:var(--mint);border-radius:28px;padding:10px}
+.route svg{display:block;width:100%;height:auto}
+.route .bg{fill:none;stroke:var(--white);stroke-width:26;stroke-linecap:round}
+.route .fg{fill:none;stroke:var(--green);stroke-width:4;stroke-linecap:round;stroke-dasharray:2 12}
+.route .cover{fill:none;stroke:var(--white);stroke-width:8;stroke-linecap:round}
+.route .cover.draw{animation:uncover 2.6s cubic-bezier(.6,0,.2,1) .2s both}
+@keyframes uncover{from{stroke-dashoffset:0}to{stroke-dashoffset:var(--L)}}
+.stop circle{fill:var(--white);stroke:var(--green);stroke-width:3;transition:r .3s,fill .3s}
+.stop.on circle{fill:var(--lime);r:13}
+.stop text{font-family:var(--display);font-weight:600;font-size:19px;fill:var(--ink);letter-spacing:-.02em}
+.route .cap{font-family:var(--body);font-size:13px;fill:var(--muted);font-weight:500}
+#walker{fill:var(--ink);stroke:var(--lime);stroke-width:4}
+@media(max-width:860px){.hero .wrap{grid-template-columns:1fr}}
+
+.stats{border-block:1px solid var(--line)}
+.stats .wrap{display:grid;grid-template-columns:repeat(4,1fr)}
+.stat{padding:28px 22px;border-left:1px solid var(--line)}
+.stat:first-child{border-left:0;padding-left:0}
+.stat strong{display:block;font-family:var(--display);font-size:clamp(1.8rem,3.6vw,2.6rem);line-height:1;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.stat span{display:block;color:var(--muted);font-size:.92rem;margin-top:8px}
+@media(max-width:760px){.stats .wrap{grid-template-columns:1fr 1fr}.stat{padding:20px 16px}.stat:nth-child(odd){border-left:0;padding-left:0}.stat:nth-child(n+3){border-top:1px solid var(--line)}}
+
+section{padding-block:clamp(60px,8.5vw,112px)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,6vw,90px);align-items:start}
+.two>*{min-width:0}
+.body{color:var(--muted);display:grid;gap:18px;max-width:58ch}
+.head{display:grid;gap:16px;max-width:62ch;margin-bottom:40px}
+.head p{color:var(--muted)}
+@media(max-width:820px){.two{grid-template-columns:1fr}}
+
+.mint{background:var(--mint)}.tealbg{background:var(--teal-tint)}
+.skills{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.skill{background:var(--white);border-radius:18px;padding:24px;min-width:0;transition:transform .3s,box-shadow .3s;position:relative;overflow:hidden}
+.skill::before{content:"";position:absolute;inset:auto 0 0 0;height:4px;background:var(--green);transform:scaleX(0);transform-origin:left;transition:transform .45s}
+.skill:hover{transform:translateY(-5px);box-shadow:0 18px 40px rgba(29,31,61,.12)}.skill:hover::before{transform:scaleX(1)}
+.skill h3{font-size:1.3rem}
+.skill p{color:var(--muted);font-size:.95rem;margin-top:10px}
+@media(max-width:820px){.skills{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.skills{grid-template-columns:1fr}}
+
+.gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:40px}
+.ph{aspect-ratio:3/4;max-width:100%;border-radius:18px;position:relative;overflow:hidden;background:var(--mint);margin:0;transition:transform .4s}.ph img{width:100%;height:100%;object-fit:cover;display:block}.ph figcaption{position:absolute;left:10px;bottom:10px;background:var(--bg);color:var(--ink);font-size:.82rem;font-weight:600;padding:5px 12px;border-radius:999px}
+.ph:nth-child(even){margin-top:28px}
+.ph:hover{transform:scale(1.02)}
+.feat{list-style:none;padding:0;margin:0;display:grid;gap:10px;color:var(--muted)}
+.feat li{padding-left:30px;position:relative}
+.feat li::before{content:"";position:absolute;left:0;top:.35em;width:18px;height:18px;border-radius:50%;background:var(--lime) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18'%3E%3Cpath d='M5 9.5l2.6 2.6L13 6.6' fill='none' stroke='%231D1F3D' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}
+@media(max-width:820px){.gallery{grid-template-columns:1fr 1fr}.ph:nth-child(even){margin-top:0}}
+
+/* referral rail */
+.rail{position:relative;list-style:none;margin:0;padding:0 0 0 46px;display:grid;gap:26px}
+.rail::before,.rail .fill{content:"";position:absolute;left:13px;top:8px;bottom:8px;width:3px;border-radius:3px;background:var(--line)}
+.rail .fill{background:var(--green);transform-origin:top;transform:scaleY(var(--p,0));padding:0}
+.rail li{position:relative}
+.rail li:not(.fill)::before{content:"";position:absolute;left:-42px;top:2px;width:21px;height:21px;border-radius:50%;background:var(--bg);border:3px solid var(--line);transition:background .3s,border-color .3s,transform .3s}
+.rail li.done::before{background:var(--lime);border-color:var(--green);transform:scale(1.12)}
+.rail b{display:block;font-family:var(--display);font-size:1.15rem;letter-spacing:-.02em}
+.rail span{color:var(--muted);font-size:.96rem}
+.card{background:var(--ink);color:var(--white);border-radius:24px;padding:30px;display:grid;gap:16px;position:sticky;top:96px}
+.card h3{font-size:1.55rem}
+.card .role{color:var(--lime);font-size:.9rem;font-weight:600}
+.card dl{margin:0;display:grid;gap:10px}
+.card dt{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:#b9bbd6}
+.card dd{margin:0;font-family:var(--display);font-size:1.2rem;user-select:all;overflow-wrap:anywhere}
+.card p{color:#d5d7ec;font-size:.94rem}
+.card .btn{background:var(--lime);color:var(--ink);justify-content:center}
+.note{font-size:.92rem;color:var(--muted);margin-top:28px;max-width:54ch}
+@media(max-width:820px){.card{position:static}}
+
+.commit{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.commit div{background:var(--white);border:1px solid var(--line);border-radius:18px;padding:20px}
+.commit b{display:block;font-family:var(--display);font-size:1.12rem;letter-spacing:-.02em;margin-bottom:4px}
+.commit span{color:var(--muted);font-size:.96rem}
+.links{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+@media(max-width:520px){.commit{grid-template-columns:1fr}}
+
+footer{background:var(--ink);color:#d5d7ec;padding-block:40px;font-size:.88rem}
+footer .wrap{display:flex;flex-wrap:wrap;gap:12px 32px;justify-content:space-between}
+.rv{transition:opacity .8s ease,transform .8s ease}.rv.pre{opacity:0;transform:translateY(22px)}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.route .cover{display:none}}
+
+/* careers */
+.band{background:var(--ink);color:var(--white)}
+.band .wrap{display:flex;flex-wrap:wrap;gap:24px;align-items:center;justify-content:space-between;padding-block:clamp(44px,6vw,72px)}
+.band h2{max-width:16ch}.band p{color:#d5d7ec;max-width:46ch;margin-top:12px}
+.band .btn{background:var(--lime);color:var(--ink)}
+.chero .wrap{padding-block:clamp(40px,6vw,80px) clamp(30px,4vw,50px)}
+.chero h1{font-size:clamp(2.6rem,7vw,5.4rem);margin-top:16px;max-width:12ch}
+.chero h1 span{background:linear-gradient(transparent 62%,var(--lime) 62%);padding-inline:.08em;margin-inline:-.08em}
+.chero .lead{max-width:56ch;color:var(--muted);font-size:1.12rem;margin-top:22px}
+.perks{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.perk{border-radius:18px;padding:24px;background:var(--c);min-width:0;transition:transform .3s}
+.perk:hover{transform:translateY(-5px)}
+.perk h3{font-size:1.3rem}.perk p{color:var(--muted);font-size:.95rem;margin-top:10px}
+@media(max-width:900px){.perks{grid-template-columns:1fr 1fr}}@media(max-width:520px){.perks{grid-template-columns:1fr}}
+.notice{background:var(--sun-tint);border-radius:18px;padding:22px 24px;display:grid;gap:6px;margin-bottom:30px}
+.notice b{font-family:var(--display);font-size:1.2rem}
+.mailrow{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.mail{font-family:var(--display);font-weight:700;font-size:1.3rem;user-select:all;overflow-wrap:anywhere}
+.copy{font:inherit;font-size:.85rem;font-weight:600;border:0;border-radius:10px;padding:8px 14px;background:var(--lime);color:var(--ink);cursor:pointer}
+.form{background:var(--white);border:1px solid var(--line);border-radius:24px;padding:28px;display:grid;gap:16px}
+.form h3{font-size:1.5rem}
+.form label{display:grid;gap:6px;font-size:.9rem;font-weight:600}
+.form input,.form select,.form textarea{font:inherit;font-weight:400;padding:12px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);width:100%;min-width:0}
+.form input:focus,.form select:focus,.form textarea:focus{outline:2px solid var(--green);outline-offset:1px}
+.form .row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form button.btn{border:0;font:inherit;font-weight:600;cursor:pointer;justify-content:center}
+.form .ok{background:var(--teal-tint);border-radius:12px;padding:12px 14px;font-size:.92rem}
+.form small{color:var(--muted);font-size:.84rem}
+@media(max-width:520px){.form .row2{grid-template-columns:1fr}}
+
+.card dd a,.mail a,footer a{color:inherit;text-decoration:none}footer a:hover,.card dd a:hover{text-decoration:underline}
+button:focus-visible{outline:2px solid var(--green);outline-offset:3px}
+footer .wrap{display:grid;grid-template-columns:1.3fr .8fr 1fr;gap:28px;justify-content:initial}
+footer .wrap>div{display:grid;gap:6px;align-content:start;min-width:0}
+@media(max-width:760px){footer .wrap{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+.hero h1 small.eyebrow{display:block;font-family:var(--body);line-height:1.6;margin-bottom:18px}.hero h1{margin-top:0}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Organization", "name": "In House Supported Accommodation Ltd", "alternateName": "In House", "url": "https://www.inhousesa.org/", "logo": "https://www.inhousesa.org/assets/images/logo.png", "description": "Ofsted-registered supported accommodation in Bristol for young people aged 16–17.", "telephone": "+447568275972", "email": "info@inhousesa.org", "address": {"@type": "PostalAddress", "streetAddress": "27–29 Baldwin Street", "addressLocality": "Bristol", "postalCode": "BS1 1LT", "addressCountry": "GB"}, "areaServed": {"@type": "City", "name": "Bristol"}, "identifier": [{"@type": "PropertyValue", "propertyID": "Ofsted URN", "value": "2824105"}, {"@type": "PropertyValue", "propertyID": "Companies House", "value": "15668732"}]}</script>
 </head>
-<body style="margin:0">
-<div style="font-family: 'Figtree', sans-serif; color: #1D1F3D; background: #FFFFFF; font-size: 17px; line-height: 1.6">
+<body>
+<header><div class="wrap nav">
+  <a class="logo" href="#top"><img src="assets/images/logo-mark.png" alt="" width="46" height="45"><span>In House <small>Supported Accommodation Ltd</small></span></a>
+  <nav id="mainnav" aria-label="Main"><a href="about.html">About</a><a href="#pathway">Pathway</a><a href="#homes">Homes</a><a href="local-authorities.html">Local authorities</a><a href="careers.html">Careers</a><a href="contact.html">Contact</a><a class="only-m" href="referral.html">Make a referral</a></nav>
+  <a class="btn small" href="referral.html">Make a referral</a>
+  <button class="menu" type="button" aria-label="Menu" aria-expanded="false" aria-controls="mainnav"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+</div></header>
+<main>
+<div class="hero" id="top"><div class="wrap">
+  <div>
+    <h1><small class="eyebrow">Ofsted-registered supported accommodation in Bristol · URN 2824105</small>Independence starts <span>In House.</span></h1>
+    <p class="lead">Small shared homes in Bristol for 16–17 year olds who are ready to take their first steps towards independence, with at least three hours of support every day and a referral response within 24 hours.</p>
+    <div class="cta"><a class="btn" href="referral.html">Make a referral <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h11M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a><a class="btn ghost" href="local-authorities.html">For local authorities</a></div>
+    <div class="avail"><b></b>3 rooms available now in Bristol</div>
+  </div>
+  <div class="route">
+    <svg id="route" viewBox="-70 0 600 560" role="img" aria-label="The Independence Pathway: from move-in day through Home, Money, Health, Community, Tenancy and Future to a front door of your own">
+      <path class="bg" d="M70 510 C 70 410, 300 450, 300 360 S 90 310, 120 220 S 400 240, 400 140 S 330 60, 440 56"/>
+      <path class="fg" id="rp" d="M70 510 C 70 410, 300 450, 300 360 S 90 310, 120 220 S 400 240, 400 140 S 330 60, 440 56"/>
+      <path class="cover" id="cover" d="M70 510 C 70 410, 300 450, 300 360 S 90 310, 120 220 S 400 240, 400 140 S 330 60, 440 56"/>
+      <text class="cap" x="92" y="536">Move-in day</text>
+      <g transform="translate(440 20)"><path d="M0 26 22 6l22 20v26H0z" fill="#4A3AA8"/><rect x="16" y="32" width="12" height="20" fill="#F5C518"/></g>
+      <text class="cap" x="486" y="13" text-anchor="end">A front door of your own</text>
+      <g id="stops"></g>
+      <circle id="walker" r="10" cx="70" cy="510"/>
+    </svg>
+  </div>
+</div></div>
 
-<header style="max-width: 1280px; margin: 0 auto; padding: 12px clamp(16px, 4vw, 40px); display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap">
-<a href="#top" style="display: flex"><img src="assets/images/logo.png" alt="In House Supported Accommodation" style="width: 92px; height: 92px; object-fit: cover; margin: -14px -8px"></a>
-<nav aria-label="Main" style="display: flex; gap: 8px; flex-wrap: wrap; font-size: 15px; font-weight: 600">
-<a href="about.html" style="color: #1D1F3D; text-decoration: none; padding: 10px 14px; border-radius: 999px; background: #FDF3D0">About</a>
-<a href="index.html#pathway" style="color: #1D1F3D; text-decoration: none; padding: 10px 14px; border-radius: 999px; background: #F2F0FB">Pathway</a>
-<a href="index.html#homes" style="color: #1D1F3D; text-decoration: none; padding: 10px 14px; border-radius: 999px; background: #E2F6F1">Homes</a>
-<a href="local-authorities.html" style="color: #1D1F3D; text-decoration: none; padding: 10px 14px; border-radius: 999px; background: #FDF3D0">Local authorities</a>
-<a href="careers.html" style="color: #1D1F3D; text-decoration: none; padding: 10px 14px; border-radius: 999px; background: #FDE3EA">Careers</a>
-<a href="contact.html" style="color: #1D1F3D; text-decoration: none; padding: 10px 14px; border-radius: 999px; background: #F2F0FB">Contact</a>
-</nav>
-<a class="btn" href="referral.html" style="background: #F5C518; color: #1D1F3D; text-decoration: none; font-weight: 700; font-size: 15px; padding: 12px 22px; border-radius: 12px; border: 2px solid #1D1F3D; min-height: 44px; box-sizing: border-box; display: inline-flex; align-items: center">Make a referral</a>
-</header>
+<div class="stats"><div class="wrap">
+  <div class="stat"><strong>3+ hrs</strong><span>of support every day</span></div>
+  <div class="stat"><strong>2–4</strong><span>young people in each home</span></div>
+  <div class="stat"><strong>24 hrs</strong><span>to answer a referral</span></div>
+  <div class="stat"><strong>24/7</strong><span>emergency phone line</span></div>
+</div></div>
 
-<section id="top" style="max-width: 1280px; margin: 0 auto; padding: clamp(32px, 5vw, 64px) clamp(16px, 4vw, 40px) 0">
-<div style="background: #4A3AA8; color: #FFFFFF; border-radius: 32px; padding: clamp(32px, 6vw, 88px); display: flex; flex-direction: column; gap: 28px; position: relative; overflow: hidden">
-<div aria-hidden="true" style="position: absolute; right: -60px; top: -60px; width: 280px; height: 280px; border-radius: 50%; background: #1BC5A6"></div>
-<div aria-hidden="true" style="position: absolute; right: 150px; bottom: -90px; width: 200px; height: 200px; border-radius: 50%; background: #F0557B"></div>
-<h1 style="margin: 0; display: inline-flex; align-self: flex-start; background: #FFFFFF; color: #2B2D5C; font-family: inherit; font-weight: 700; font-size: 14px; line-height: 1.6; padding: 8px 14px; border-radius: 999px; position: relative">Ofsted-registered supported accommodation in Bristol · URN 2824105</h1>
-<p style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(52px, 8.6vw, 132px); line-height: .92; letter-spacing: -0.03em; max-width: 960px; position: relative">Independence starts In House.</p>
-<p style="margin: 0; font-size: clamp(18px, 1.9vw, 22px); max-width: 620px; color: #EEEBFF; position: relative">Small shared homes in Bristol for 16–17 year olds who are ready to take their first steps towards independence, with at least three hours of support every day and a referral response within 24 hours.</p>
-<div style="position: relative"><a class="btn" href="referral.html" style="background: #F5C518; color: #1D1F3D; text-decoration: none; font-weight: 700; font-size: 18px; padding: 16px 30px; border-radius: 14px; border: 2px solid #1D1F3D; min-height: 56px; box-sizing: border-box; display: inline-flex; align-items: center">Make a referral</a></div>
-</div>
-</section>
+<section id="approach"><div class="wrap two">
+  <div class="rv"><p class="eyebrow">Our approach</p><h2 style="margin-top:14px">Every young person has strengths. We start there.</h2></div>
+  <div class="body rv">
+    <p>Our Solution-Focused Brief Therapy approach is positive, respectful and strengths-based. It's built into every keywork session, routine and skill-building activity, and every member of staff is trained in it.</p>
+    <p>We keep homes small and family-style, because stability and trust are what let young people grow, heal and move on with confidence.</p>
+  </div>
+</div></section>
 
-<section aria-label="Key facts" style="max-width: 1280px; margin: 0 auto; padding: 16px clamp(16px, 4vw, 40px) 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px">
-<div class="tile" style="background: #1BC5A6; border-radius: 24px; padding: 28px; display: flex; flex-direction: column; gap: 4px"><span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 56px; font-weight: 800; line-height: 1">3+</span><span style="font-weight: 600">hours of support, every day</span></div>
-<div class="tile" style="background: #F5C518; border-radius: 24px; padding: 28px; display: flex; flex-direction: column; gap: 4px"><span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 56px; font-weight: 800; line-height: 1">2–4</span><span style="font-weight: 600">young people in each home</span></div>
-<div class="tile" style="background: #F0557B; border-radius: 24px; padding: 28px; display: flex; flex-direction: column; gap: 4px"><span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 56px; font-weight: 800; line-height: 1">24h</span><span style="font-weight: 600">referral response</span></div>
-<div class="tile" style="background: #2B2D5C; color: #FFFFFF; border-radius: 24px; padding: 28px; display: flex; flex-direction: column; gap: 4px"><span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 56px; font-weight: 800; line-height: 1">24/7</span><span style="font-weight: 600">emergency phone line</span></div>
-</section>
+<section class="mint" id="pathway"><div class="wrap">
+  <div class="head rv"><p class="eyebrow">The Independence Pathway</p><h2>Support today. Skills for tomorrow.</h2>
+  <p>The In House Independence Pathway: six skill areas, regular assessments, monthly reports to social workers and up to three months of outreach after move-on.</p></div>
+  <div class="skills">
+    <div class="skill rv"><h3>Home</h3><p>Cooking, cleaning, laundry, routines, home safety and shared living.</p></div>
+    <div class="skill rv"><h3>Money</h3><p>Budgeting, banking, bills, saving and financial responsibility.</p></div>
+    <div class="skill rv"><h3>Health</h3><p>Appointments, medication routines, self-care and wellbeing.</p></div>
+    <div class="skill rv"><h3>Community</h3><p>Travel, communication, personal safety and local services.</p></div>
+    <div class="skill rv"><h3>Tenancy</h3><p>Rights, responsibilities, property care and move-on preparation.</p></div>
+    <div class="skill rv"><h3>Future</h3><p>Education, training, employment, CVs, interviews and goals.</p></div>
+  </div>
+</div></section>
 
-<section id="approach" style="max-width: 1280px; margin: 0 auto; padding: clamp(72px, 10vw, 136px) clamp(16px, 4vw, 40px); display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 48px; align-items: center">
-<h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(38px, 5vw, 68px); line-height: 1; letter-spacing: -0.02em">Every young person has strengths. We start there.</h2>
-<div style="display: flex; flex-direction: column; gap: 16px; color: #3A3E5C">
-<p style="margin: 0">Our Solution-Focused Brief Therapy approach is positive, respectful and strengths-based. It's built into every keywork session, routine and skill-building activity, and every member of staff is trained in it.</p>
-<p style="margin: 0">We keep homes small and family-style, because stability and trust are what let young people grow, heal and move on with confidence.</p>
-</div>
-</section>
+<section id="homes"><div class="wrap">
+  <div class="two">
+    <div class="rv"><p class="eyebrow">Our homes</p><h2 style="margin-top:14px">Homes that feel like home.</h2>
+      <p style="color:var(--muted);margin-top:18px;max-width:46ch">Shared by two to four young people, each home is calm, safe and well kept.</p></div>
+    <ul class="feat rv">
+      <li>Furnished bedroom with your own key</li><li>Stocked kitchen and laundry</li><li>Wi-Fi, bills and maintenance included</li>
+      <li>Welcome pack on move-in day</li><li>Quiet study space</li><li>Gas, electrical and fire safety checks</li>
+    </ul>
+  </div>
+  <div class="gallery rv">
+    <figure class="ph"><img src="assets/images/lounge.jpg" alt="Shared lounge with two sofas, a coffee table and a dining area" loading="lazy"><figcaption>Shared lounge</figcaption></figure><figure class="ph"><img src="assets/images/kitchen-lounge.jpg" alt="Open-plan kitchen and lounge with garden doors" loading="lazy"><figcaption>Kitchen</figcaption></figure><figure class="ph"><img src="assets/images/bedroom.jpg" alt="Bright bedroom with a double bed" loading="lazy"><figcaption>Bedroom</figcaption></figure><figure class="ph"><img src="assets/images/study.jpg" alt="Quiet study room with desks and chairs" loading="lazy"><figcaption>Quiet study room</figcaption></figure>
+  </div>
+</div></section>
 
-<section id="pathway" style="max-width: 1280px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 40px) clamp(72px, 10vw, 136px); display: flex; flex-direction: column; gap: 32px">
-<div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap">
-<h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(38px, 5vw, 68px); line-height: 1; letter-spacing: -0.02em; max-width: 700px">Support today. Skills for tomorrow.</h2>
-<p style="margin: 0; color: #3A3E5C; max-width: 420px">The In House Independence Pathway: six skill areas, regular assessments, monthly reports to social workers and up to three months of outreach after move-on.</p>
-</div>
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px">
-<div class="tile" style="background: #F2F0FB; border-radius: 24px; padding: 30px; min-height: 200px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; gap: 16px"><span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 32px">Home</span><span style="color: #3A3E5C">Cooking, cleaning, laundry, routines, home safety, shared living</span></div>
-<div class="tile" style="background: #E2F6F1; border-radius: 24px; padding: 30px; min-height: 200px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; gap: 16px"><span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 32px">Money</span><span style="color: #3A3E5C">Budgeting, banking, bills, saving, financial responsibility</span></div>
-<div class="tile" style="background: #FDF3D0; border-radius: 24px; padding: 30px; min-height: 200px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; gap: 16px"><span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 32px">Health</span><span style="color: #3A3E5C">Appointments, medication routines, self-care, wellbeing</span></div>
-<div class="tile" style="background: #FDE3EA; border-radius: 24px; padding: 30px; min-height: 200px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; gap: 16px"><span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 32px">Community</span><span style="color: #3A3E5C">Travel, communication, staying safe, local services</span></div>
-<div class="tile" style="background: #F2F0FB; border-radius: 24px; padding: 30px; min-height: 200px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; gap: 16px"><span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 32px">Tenancy</span><span style="color: #3A3E5C">Rights, responsibilities, property care, move-on preparation</span></div>
-<div class="tile" style="background: #E2F6F1; border-radius: 24px; padding: 30px; min-height: 200px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; gap: 16px"><span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 32px">Future</span><span style="color: #3A3E5C">Education, training, employment, CVs, interviews, goals</span></div>
-</div>
-</section>
+<section class="tealbg" id="refer"><div class="wrap two">
+  <div>
+    <div class="head rv" style="margin-bottom:30px"><p class="eyebrow">Referrals</p><h2>Making a referral is simple.</h2>
+    <p>We reply within 24 hours, and the same working day for urgent placements.</p></div>
+    <ol class="rail" id="rail">
+      <li class="fill" aria-hidden="true"></li>
+      <li><b>Get in touch</b><span>Call or email our Registered Manager.</span></li>
+      <li><b>Share the referral</b><span>Assessment, risk and pathway plan.</span></li>
+      <li><b>Matching</b><span>Safety and compatibility with the home come first.</span></li>
+      <li><b>Pre-placement visit</b><span>Wherever possible, the young person sees the home first.</span></li>
+      <li><b>Move-in</b><span>Induction, guide and support plan.</span></li>
+    </ol>
+    <p class="note">We support care leavers and young people at risk of homelessness, including mild to moderate learning needs, for 6–24 months. We cannot accept referrals needing specialist residential care or with a history of arson.</p>
+  </div>
+  <div class="card rv">
+    <div><h3>Zarqa Waseem</h3><p class="role">Registered Manager</p></div>
+    <p>Over 10 years leading services for young people in the UK, and more than 25 years in health and social care.</p>
+    <dl><div><dt>Phone</dt><dd><a href="tel:07568275972">07568 275972</a></dd></div><div><dt>Email</dt><dd><a href="mailto:zarqa@inhousesa.org">zarqa@inhousesa.org</a></dd></div></dl>
+    <a class="btn" href="referral.html">Start a referral</a>
+  </div>
+</div></section>
 
-<section id="homes" style="background: #FDF3D0">
-<div style="max-width: 1280px; margin: 0 auto; padding: clamp(72px, 10vw, 128px) clamp(16px, 4vw, 40px); display: flex; flex-direction: column; gap: 40px">
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 32px; align-items: end">
-<div style="display: flex; flex-direction: column; gap: 16px">
-<h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(38px, 5vw, 64px); line-height: 1; letter-spacing: -0.02em">Homes that feel like home.</h2>
-<p style="margin: 0; color: #3A3E5C">Shared by two to four young people, each home is calm, safe and well kept.</p>
-</div>
-<ul style="margin: 0; padding-left: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 6px 20px; font-weight: 500">
-<li>Furnished bedroom with own key</li><li>Stocked kitchen and laundry</li><li>Wi-Fi, bills and maintenance</li><li>Welcome pack on arrival</li><li>Quiet study space</li><li>Gas, electrical and fire safety</li>
-</ul>
-</div>
-<div style="display: flex; flex-direction: column; gap: 14px">
-<div style="display: flex; flex-wrap: wrap; gap: 14px">
-<figure class="tile" style="margin: 0; flex: 2 1 520px; min-width: 0; height: clamp(280px, 38vw, 520px)"><img src="assets/images/lounge.jpg" alt="Shared lounge with two sofas, a coffee table and a dining area" style="width: 100%; height: 100%; min-height: 280px; object-fit: cover; display: block; border-radius: 24px"></figure>
-<figure class="tile" style="margin: 0; flex: 1 1 300px; min-width: 0; height: clamp(280px, 38vw, 520px)"><img src="assets/images/kitchen-lounge.jpg" alt="Open-plan kitchen and lounge with garden doors" style="width: 100%; height: 100%; min-height: 280px; object-fit: cover; display: block; border-radius: 24px"></figure>
-</div>
-<div style="display: flex; flex-wrap: wrap; gap: 14px">
-<figure class="tile" style="margin: 0; flex: 1 1 260px; min-width: 0; height: clamp(260px, 30vw, 400px)"><img src="assets/images/bedroom.jpg" alt="Bright bedroom with a double bed" style="width: 100%; height: 100%; min-height: 260px; object-fit: cover; display: block; border-radius: 24px"></figure>
-<figure class="tile" style="margin: 0; flex: 1 1 260px; min-width: 0; height: clamp(260px, 30vw, 400px)"><img src="assets/images/bedroom-fireplace.jpg" alt="Bedroom with a period fireplace, shelves and an armchair" style="width: 100%; height: 100%; min-height: 260px; object-fit: cover; display: block; border-radius: 24px"></figure>
-<figure class="tile" style="margin: 0; flex: 1 1 260px; min-width: 0; height: clamp(260px, 30vw, 400px)"><img src="assets/images/study.jpg" alt="Quiet study room with desks and chairs" style="width: 100%; height: 100%; min-height: 260px; object-fit: cover; display: block; border-radius: 24px"></figure>
-</div>
-</div>
-</div>
-</section>
+<section id="la"><div class="wrap two">
+  <div class="rv"><p class="eyebrow">For local authorities</p><h2 style="margin-top:14px">What commissioners can count on.</h2>
+    <p style="color:var(--muted);margin-top:18px;max-width:48ch">Regulated under the Supported Accommodation (England) Regulations 2023. Pricing is tailored to assessed need and available on request.</p>
+    <div class="links"><a class="btn ghost small" href="docs/statement-of-purpose.pdf">Statement of Purpose (PDF)</a><a class="btn ghost small" href="https://reports.ofsted.gov.uk/" rel="noopener">Ofsted reports · URN 2824105</a><a class="btn ghost small" href="complaints.html">Complaints procedure</a><a class="btn ghost small" href="local-authorities.html">More for local authorities</a></div></div>
+  <div class="commit rv">
+    <div><b>Monthly</b><span>progress reports to the social worker</span></div>
+    <div><b>Two weeks</b><span>to the first placement review</span></div>
+    <div><b>Every 3 months</b><span>support plan reviews</span></div>
+    <div><b>Enhanced DBS</b><span>and safer recruitment for all staff</span></div>
+  </div>
+</div></section>
 
-<section id="referral" style="max-width: 1280px; margin: 0 auto; padding: clamp(72px, 10vw, 136px) clamp(16px, 4vw, 40px); display: flex; flex-direction: column; gap: 36px">
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 32px; align-items: end">
-<h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(38px, 5vw, 68px); line-height: 1; letter-spacing: -0.02em">Making a referral is simple.</h2>
-<div style="background: #2B2D5C; color: #FFFFFF; border-radius: 24px; padding: 26px 28px; display: flex; flex-direction: column; gap: 4px">
-<span style="color: #D5D7EC; font-size: 15px">Zarqa Waseem, Registered Manager</span>
-<a href="tel:07568275972" style="color: #FFFFFF; text-decoration: none; font-family: 'Bricolage Grotesque', sans-serif; font-size: 34px; font-weight: 800">07568 275972</a>
-<a href="mailto:zarqa@inhousesa.org" style="color: #9FE3D4; font-weight: 600">zarqa@inhousesa.org</a>
-<span style="color: #D5D7EC; font-size: 14px; margin-top: 8px">Over 10 years leading services for young people in the UK, and more than 25 years in health and social care.</span>
-</div>
-</div>
-<ol style="margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px">
-<li style="border: 2px solid #1D1F3D; border-radius: 20px; padding: 22px; display: flex; flex-direction: column; gap: 6px"><span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 28px; color: #4A3AA8">1</span><strong>Get in touch</strong><span style="color: #3A3E5C; font-size: 15px">Call or email us.</span></li>
-<li style="border: 2px solid #1D1F3D; border-radius: 20px; padding: 22px; display: flex; flex-direction: column; gap: 6px"><span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 28px; color: #4A3AA8">2</span><strong>Share the referral</strong><span style="color: #3A3E5C; font-size: 15px">Assessment, risk, pathway plan.</span></li>
-<li style="border: 2px solid #1D1F3D; border-radius: 20px; padding: 22px; display: flex; flex-direction: column; gap: 6px"><span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 28px; color: #4A3AA8">3</span><strong>We match</strong><span style="color: #3A3E5C; font-size: 15px">Safety and compatibility first.</span></li>
-<li style="border: 2px solid #1D1F3D; border-radius: 20px; padding: 22px; display: flex; flex-direction: column; gap: 6px"><span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 28px; color: #4A3AA8">4</span><strong>Visit</strong><span style="color: #3A3E5C; font-size: 15px">Pre-placement visit where possible.</span></li>
-<li style="border: 2px solid #1D1F3D; border-radius: 20px; padding: 22px; display: flex; flex-direction: column; gap: 6px"><span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 28px; color: #4A3AA8">5</span><strong>Move in</strong><span style="color: #3A3E5C; font-size: 15px">Induction, guide and support plan.</span></li>
-</ol>
-<p style="margin: 0; color: #3A3E5C; font-size: 15px; max-width: 860px">We respond within 24 hours, and the same working day for urgent placements. We support care leavers and young people at risk of homelessness, including mild to moderate learning needs, for 6–24 months. We cannot accept referrals needing specialist residential care or with a history of arson.</p>
-</section>
+<section class="band" style="padding-block:0"><div class="wrap">
+  <div class="rv"><p class="eyebrow" style="color:var(--lime)">Careers</p><h2 style="margin-top:12px">Be the adult they remember.</h2><p>Small homes mean you really get to know the young people you support. We back you with the training and supervision to do it well.</p></div>
+  <a class="btn rv" href="careers.html">Working for us <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h11M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+</div></section>
 
-<section id="commissioners" style="max-width: 1280px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 40px) clamp(72px, 10vw, 136px)">
-<div style="border: 2px solid #1D1F3D; border-radius: 32px; padding: clamp(28px, 5vw, 56px); display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 32px">
-<div style="display: flex; flex-direction: column; gap: 12px">
-<h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(32px, 3.6vw, 48px); line-height: 1.02">For local authorities</h2>
-<p style="margin: 0; color: #3A3E5C">Regulated under the Supported Accommodation (England) Regulations 2023. Pricing tailored to assessed need, on request.</p>
-</div>
-<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; font-weight: 500">
-<li>Monthly progress reports to social workers</li><li>Placement review at two weeks</li><li>Support plan reviews every three months</li><li>Enhanced DBS and safer recruitment</li>
-</ul>
-<div style="display: flex; flex-direction: column; gap: 10px; font-weight: 600">
-<a href="docs/statement-of-purpose.pdf">Statement of Purpose (PDF)</a><a href="https://reports.ofsted.gov.uk/" target="_blank" rel="noopener">Ofsted reports · URN 2824105</a><a href="complaints.html">Complaints procedure</a><a href="local-authorities.html">More for local authorities →</a>
-</div>
-</div>
-</section>
-
-<section id="careers" style="background: #2B2D5C; color: #FFFFFF">
-<div style="max-width: 1280px; margin: 0 auto; padding: clamp(72px, 10vw, 128px) clamp(16px, 4vw, 40px); display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 48px; align-items: center">
-<div style="display: flex; flex-direction: column; gap: 20px">
-<div style="display: inline-flex; align-self: flex-start; background: #F0557B; color: #1D1F3D; font-weight: 700; font-size: 14px; padding: 8px 14px; border-radius: 999px">We're hiring</div>
-<h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(40px, 5.4vw, 76px); line-height: .98; letter-spacing: -0.02em">Be the adult they remember.</h2>
-<p style="margin: 0; color: #D5D7EC">Small homes mean you really get to know the young people you support. We back you with the training and supervision to do it well.</p>
-<div><a class="btn" href="careers.html" style="background: #1BC5A6; color: #1D1F3D; text-decoration: none; font-weight: 700; padding: 14px 26px; border-radius: 14px; border: 2px solid #1D1F3D; min-height: 52px; box-sizing: border-box; display: inline-flex; align-items: center">Register your interest</a></div>
-</div>
-<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
-<div style="background: #4A3AA8; border-radius: 20px; padding: 22px"><strong style="display: block; font-size: 18px">SFBT training</strong><span style="color: #E2E0F7; font-size: 15px">With ongoing consultancy</span></div>
-<div style="background: #4A3AA8; border-radius: 20px; padding: 22px"><strong style="display: block; font-size: 18px">Full induction</strong><span style="color: #E2E0F7; font-size: 15px">Plus mandatory training</span></div>
-<div style="background: #4A3AA8; border-radius: 20px; padding: 22px"><strong style="display: block; font-size: 18px">Supervision</strong><span style="color: #E2E0F7; font-size: 15px">Regular, with annual appraisals</span></div>
-<div style="background: #4A3AA8; border-radius: 20px; padding: 22px"><strong style="display: block; font-size: 18px">Backup</strong><span style="color: #E2E0F7; font-size: 15px">24-hour on-call support</span></div>
-</div>
-</div>
-</section>
-
-<footer style="max-width: 1280px; margin: 0 auto; padding: 40px clamp(16px, 4vw, 40px) 48px; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; font-size: 14px; color: #3A3E5C">
-<div style="display: flex; flex-direction: column; gap: 4px"><strong style="color: #1D1F3D">In House Supported Accommodation Ltd</strong><span>Company no. 15668732</span><span>Registered office: 27–29 Baldwin Street, Bristol BS1 1LT</span><span>Ofsted URN 2824105</span></div>
-<div style="display: flex; flex-direction: column; gap: 4px"><a href="tel:07568275972">07568 275972</a><a href="mailto:info@inhousesa.org">info@inhousesa.org</a></div>
-<div style="display: flex; flex-direction: column; gap: 4px"><a href="supported-accommodation.html">What is supported accommodation?</a><a href="ofsted-supported-accommodation-standards.html">Ofsted standards explained</a><a href="how-to-choose-a-supported-accommodation-provider.html">Choosing a provider</a><a href="privacy.html">Privacy policy</a><a href="complaints.html">Complaints procedure</a><a href="docs/statement-of-purpose.pdf">Statement of Purpose</a></div>
-</footer>
-
-</div>
-
+</main>
+<footer><div class="wrap">
+  <div><b style="color:#fff">In House Supported Accommodation Ltd</b><span>Company no. 15668732</span><span>Registered office: 27–29 Baldwin Street, Bristol BS1 1LT</span><span>Ofsted URN 2824105</span></div>
+  <div><a href="tel:07568275972">07568 275972</a><a href="mailto:info@inhousesa.org">info@inhousesa.org</a></div>
+  <div><a href="supported-accommodation.html">What is supported accommodation?</a><a href="ofsted-supported-accommodation-standards.html">Ofsted standards explained</a><a href="how-to-choose-a-supported-accommodation-provider.html">Choosing a provider</a><a href="privacy.html">Privacy policy</a><a href="complaints.html">Complaints procedure</a><a href="docs/statement-of-purpose.pdf">Statement of Purpose</a></div>
+</div></footer>
+<script>
+(function(){
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var mb=document.querySelector('.menu'),nv=document.getElementById('mainnav');
+  mb.addEventListener('click',function(){var o=nv.classList.toggle('open');mb.setAttribute('aria-expanded',o)});
+  nv.addEventListener('click',function(e){if(e.target.tagName==='A'){nv.classList.remove('open');mb.setAttribute('aria-expanded','false')}});
+  function onScroll(){[].forEach.call(document.querySelectorAll('.rail'),function(rail){if(!rail.offsetHeight)return;var fill=rail.querySelector('.fill'),items=rail.querySelectorAll('li:not(.fill)');
+    var r=rail.getBoundingClientRect(),p=Math.max(0,Math.min(1,(innerHeight*.62-r.top)/r.height));
+    fill.style.setProperty('--p',p);[].forEach.call(items,function(li){li.classList.toggle('done',(li.offsetTop+10)/rail.offsetHeight<=p+.001)})})}
+  addEventListener('scroll',onScroll,{passive:true});addEventListener('resize',onScroll);onScroll();
+  if(!reduce&&'IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.remove('pre');io.unobserve(e.target)}})},{rootMargin:'0px 0px -8% 0px'});
+    document.querySelectorAll('.rv').forEach(function(el){if(el.getBoundingClientRect().top>innerHeight){el.classList.add('pre');io.observe(el)}});
+  }
+  var rp=document.getElementById('rp'),cover=document.getElementById('cover'),L=rp.getTotalLength();
+  var names=['Home','Money','Health','Community','Tenancy','Future'],fr=[.1,.26,.42,.58,.74,.89];
+  var pos=[[24,6,'start'],[-24,6,'end'],[24,6,'start'],[-24,6,'end'],[0,40,'middle'],[-24,6,'end']];
+  var g=document.getElementById('stops'),ns='http://www.w3.org/2000/svg',stops=[];
+  names.forEach(function(n,i){
+    var p=rp.getPointAtLength(fr[i]*L),s=document.createElementNS(ns,'g');s.setAttribute('class','stop');
+    var c=document.createElementNS(ns,'circle');c.setAttribute('cx',p.x);c.setAttribute('cy',p.y);c.setAttribute('r',10);
+    var t=document.createElementNS(ns,'text'),o=pos[i];
+    t.setAttribute('x',p.x+o[0]);t.setAttribute('y',p.y+o[1]);t.setAttribute('text-anchor',o[2]);t.textContent=n;
+    s.appendChild(c);s.appendChild(t);g.appendChild(s);stops.push(s);
+  });
+  cover.style.strokeDasharray=L;cover.style.setProperty('--L',-L);
+  if(reduce){stops.forEach(function(s){s.classList.add('on')});}
+  else{
+    cover.classList.add('draw');
+    var w=document.getElementById('walker'),t0=null;
+    (function step(t){if(t0===null)t0=t;var p=((t-t0)/12000)%1,pt=rp.getPointAtLength(p*L);
+      w.setAttribute('cx',pt.x);w.setAttribute('cy',pt.y);
+      stops.forEach(function(s,i){s.classList.toggle('on',p>=fr[i]-.01)});
+      requestAnimationFrame(step)})(performance.now());
+  }
+})();
+</script>
 </body>
 </html>
